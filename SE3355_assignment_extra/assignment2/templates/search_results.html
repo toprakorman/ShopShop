@@ -1,0 +1,25 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="search-bar">
+    <form action="{{ url_for('search_results') }}" method="get">
+        <input type="text" name="query" placeholder="Arama yap" value="{{ query }}">
+        <button type="submit">Search</button>
+    </form>
+</div>
+<h2>Search Results for "{{ query }}"</h2>
+<div class="product-container">
+    {% if products %}
+        {% for product in products %}
+        <div class="product-card">
+            <a href="{{ url_for('product_detail', item_id=product['id']) }}">
+                <img src="{{ url_for('static', filename=product['image']) }}" alt="{{ product['name'] }}">
+                <h4>{{ product['name'] }}</h4>
+                <p>${{ product['price'] }}</p>
+            </a>
+        </div>
+        {% endfor %}
+    {% else %}
+        <p>No products found.</p>
+    {% endif %}
+</div>
+{% endblock %}
